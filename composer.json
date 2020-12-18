@@ -1,0 +1,13 @@
+{
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Contentus\\": "core",
+            "Tests\\": "tests",
+            "Controller\\": "public"
+        }
+    }
+}
+

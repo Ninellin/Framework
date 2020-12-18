@@ -36,15 +36,18 @@ class Router
         }
     }
 
+
     private function register_get($link, $path)
     {
         $this->routes['get'][$link] = $path;
     }
 
+
     private function register_post($link, $path)
     {
         $this->routes['post'][$link] = $path;
     }
+
 
     public function route()
     {
