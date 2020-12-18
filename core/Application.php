@@ -7,8 +7,13 @@ class Application
 {
     public function __construct()
     {
-        $router = new Router();
-        $router->register_routes();
-        $router->route();
+        $this->router = new Router();
+        $this->router->register_routes_from_config();
+    }
+
+
+    public function run()
+    {
+        $controller = $this->router->route();
     }
 }

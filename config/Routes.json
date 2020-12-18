@@ -16,7 +16,7 @@
     },
 
     "index": {
-      "path": "index.php",
+      "path": "startPage.php",
       "link": "/",
       "allowed_methods": ["get", "post"]
     }

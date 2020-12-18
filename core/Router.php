@@ -3,22 +3,31 @@
 namespace Contentus;
 
 use Controller\index;
+use stdClass;
 
 class Router
 {
     protected array $routes = [];
 
+    protected stdClass $routesConfig;
+
+    private Request $request;
+
+    private ConfigHandler $configHandler;
+
 
     public function __construct()
     {
         $this->configHandler = new ConfigHandler();
-        $this->routesConfig = $this->configHandler->get_routes_config();
 
         $this->request = new Request();
     }
 
-    public function register_routes()
+
+    public function register_routes_from_config()
     {
+        $this->loadRoutesFromConfig();
+
         foreach ($this->routesConfig->routes as $route)
         {
             $path = $route->path;
@@ -27,23 +36,23 @@ class Router
 
             if (in_array('get', $methodsToRegister))
             {
-                $this->register_get($link, $path);
+                $this->registerGetPath($link, $path);
             }
             if (in_array('post', $methodsToRegister))
             {
-                $this->register_post($link, $path);
+                $this->registerPostPath($link, $path);
             }
         }
     }
 
 
-    private function register_get($link, $path)
+    private function registerGetPath(string $link, string $path)
     {
         $this->routes['get'][$link] = $path;
     }
 
 
-    private function register_post($link, $path)
+    private function registerPostPath(string $link, string $path)
     {
         $this->routes['post'][$link] = $path;
     }
@@ -54,19 +63,43 @@ class Router
         $currentPath = $this->request->getPath();
         $currentMethod = $this->request->getMethod();
 
-        if (!array_key_exists($currentPath, $this->routes[$currentMethod]))
+        if (!$this->currentPathIsAllowed($currentPath, $currentMethod))
         {
             echo '404';
             die();
         }
 
-        $pathToController = $this->routes[$currentMethod][$currentPath];
+        return $this->getControllerForGivenRoute($currentPath, $currentMethod);
 
+    }
+
+
+    private function getControllerForGivenRoute(string $currentPath, string $currentMethod)
+    {
+        $pathToController = $this->routes[$currentMethod][$currentPath];
         $controller = (substr($pathToController, 0, strpos($pathToController, '.php')));
 
-        include_once '../public/'. $pathToController;
+        $str = "\\Controller\\" . $controller;
 
-        $controller = new $controller;
+        $controller = new $str;
 
+        return $controller;
+    }
+
+
+    private function currentPathIsAllowed(string $currentPath, string $currentMethod)
+    {
+        if (!array_key_exists($currentPath, $this->routes[$currentMethod]))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private function loadRoutesFromConfig()
+    {
+        $this->routesConfig = $this->configHandler->getRoutesConfig();
     }
 }

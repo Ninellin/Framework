@@ -13,4 +13,21 @@ class about extends SiteController
     {
         echo 'about';
     }
+
+    public function run()
+    {
+
+    }
+
+
+    public function getData()
+    {
+
+    }
+
+
+    public function renderView()
+    {
+
+    }
 }
