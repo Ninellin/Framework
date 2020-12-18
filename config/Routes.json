@@ -1,0 +1,24 @@
+{
+  "name": "routes",
+
+  "routes": {
+
+    "contact": {
+      "path": "contact.php",
+      "link": "/contact",
+      "allowed_methods": ["get", "post"]
+    },
+
+    "about": {
+      "path": "about.php",
+      "link": "/about",
+      "allowed_methods": ["get"]
+    },
+
+    "index": {
+      "path": "index.php",
+      "link": "/",
+      "allowed_methods": ["get", "post"]
+    }
+  }
+}
