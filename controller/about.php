@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Contentus\SiteController;
+use Contentus\ViewRenderer;
 
 class about extends SiteController
 {
@@ -12,22 +13,5 @@ class about extends SiteController
     public function __construct()
     {
         echo 'about';
-    }
-
-    public function run()
-    {
-
-    }
-
-
-    public function getData()
-    {
-
-    }
-
-
-    public function renderView()
-    {
-
     }
 }

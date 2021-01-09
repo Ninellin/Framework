@@ -15,5 +15,6 @@ class Application
     public function run()
     {
         $controller = $this->router->route();
+        $controller->run();
     }
 }
