@@ -13,15 +13,12 @@ class SiteController
     }
 
 
-    public function getData()
+    private function getData()
     {
-        return [];
     }
 
 
-    public function renderView($data)
+    private function renderView($data)
     {
-        $renderer = new \Renderer\ViewRenderer();
-        $renderer->render('about.twig', $data);
     }
 }

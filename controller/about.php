@@ -14,4 +14,17 @@ class about extends SiteController
     {
         echo 'about';
     }
+
+
+    private function getData()
+    {
+        return [];
+    }
+
+
+    private function renderView($data)
+    {
+        $renderer = new \Renderer\ViewRenderer();
+        $renderer->render('about.twig', $data);
+    }
 }
