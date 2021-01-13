@@ -3,7 +3,9 @@
 namespace Contentus;
 
 use Controller\index;
+use Exception;
 use stdClass;
+use function PHPUnit\Framework\throwException;
 
 class Router
 {
@@ -49,6 +51,7 @@ class Router
     private function registerGetPath(string $link, string $path)
     {
         $this->routes['get'][$link] = $path;
+        $this->routes[] = new Route("get", $link, $path);
     }
 
 
@@ -60,34 +63,38 @@ class Router
 
     public function route()
     {
-        $currentPath = $this->request->getPath();
-        $currentMethod = $this->request->getMethod();
-
-        if (!$this->currentPathIsAllowed($currentPath, $currentMethod))
+/*        if (!$this->currentPathIsAllowed())
         {
             echo '404';
             die();
-        }
+        }*/
 
-        return $this->getControllerForGivenRoute($currentPath, $currentMethod);
+        return $this->getControllerForGivenRoute();
 
     }
 
 
-    private function getControllerForGivenRoute(string $currentPath, string $currentMethod)
+    private function getControllerForGivenRoute()
     {
-        $pathToController = $this->routes[$currentMethod][$currentPath];
-        $controller = (substr($pathToController, 0, strpos($pathToController, '.php')));
+        foreach ($this->routes as $route)
+        {
+            if ($route->matches($this->request))
+            {
+                $pathToController = $route->getController();
+                $controller = (substr($pathToController, 0, strpos($pathToController, '.php')));
 
-        $str = "\\Controller\\" . $controller;
+                $str = "\\Controller\\" . $controller;
 
-        $controller = new $str;
+                $controller = new $str;
 
-        return $controller;
+                return $controller;
+            }
+        }
+        throw new Exception("Path not found");
     }
 
 
-    private function currentPathIsAllowed(string $currentPath, string $currentMethod)
+/*    private function currentPathIsAllowed()
     {
         if (!array_key_exists($currentPath, $this->routes[$currentMethod]))
         {
@@ -95,7 +102,7 @@ class Router
         }
 
         return true;
-    }
+    }*/
 
 
     private function loadRoutesFromConfig()
