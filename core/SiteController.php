@@ -6,26 +6,19 @@ namespace Contentus;
 
 class SiteController
 {
-
-    public function __construct()
-    {
-    }
-
     public function run()
     {
-        $this->getData();
-        $this->renderView();
+        $data = $this->getData();
+        $this->renderView($data);
     }
 
 
-    protected function getData()
+    private function getData()
     {
-
     }
 
 
-    protected function renderView()
+    private function renderView($data)
     {
-
     }
 }

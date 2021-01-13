@@ -4,7 +4,9 @@
 namespace Controller;
 
 
-class startPage
+use Contentus\SiteController;
+
+class startPage extends SiteController
 {
     public function __construct()
     {
