@@ -1,0 +1,22 @@
+#!/usr/bin/php
+<?php
+
+require_once __DIR__ . "/commands/Controller/ControllerCommands.php";
+
+
+$controllerCommands = new ControllerCommands();
+
+$controllerType = readline("What Type of Controller? (t = twig; h = html)  ");
+
+$controllerName = readline("Name of the Controller: ");
+
+
+switch ($controllerType)
+{
+    case "t":   $controllerCommands->createTwigController($controllerName);
+                break;
+
+    default:    echo "ERROR";
+                die();
+}
+

@@ -2,7 +2,7 @@
 
 namespace Contentus;
 
-use Controller\index;
+use Exception;
 use stdClass;
 
 class Router
@@ -48,53 +48,46 @@ class Router
 
     private function registerGetPath(string $link, string $path)
     {
-        $this->routes['get'][$link] = $path;
+        $this->routes[] = new Route("get", $link, $path);
     }
 
 
     private function registerPostPath(string $link, string $path)
     {
-        $this->routes['post'][$link] = $path;
+        $this->routes[] = new Route("post", $link, $path);
     }
 
 
     public function route()
     {
-        $currentPath = $this->request->getPath();
-        $currentMethod = $this->request->getMethod();
-
-        if (!$this->currentPathIsAllowed($currentPath, $currentMethod))
+/*        if (!$this->currentPathIsAllowed())
         {
             echo '404';
             die();
-        }
+        }*/
 
-        return $this->getControllerForGivenRoute($currentPath, $currentMethod);
+        return $this->getControllerForGivenRoute();
 
     }
 
 
-    private function getControllerForGivenRoute(string $currentPath, string $currentMethod)
+    private function getControllerForGivenRoute()
     {
-        $pathToController = $this->routes[$currentMethod][$currentPath];
-        $controller = (substr($pathToController, 0, strpos($pathToController, '.php')));
-
-        $str = "\\Controller\\" . $controller;
-
-        $controller = new $str;
-
-        return $controller;
-    }
-
-
-    private function currentPathIsAllowed(string $currentPath, string $currentMethod)
-    {
-        if (!array_key_exists($currentPath, $this->routes[$currentMethod]))
+        foreach ($this->routes as $route)
         {
-            return false;
-        }
+            if ($route->matches($this->request))
+            {
+                $pathToController = $route->getController();
+                $controller = (substr($pathToController, 0, strpos($pathToController, '.php')));
 
-        return true;
+                $str = "\\Controller\\" . $controller;
+
+                $controller = new $str;
+
+                return $controller;
+            }
+        }
+        throw new Exception("Path not found");
     }
 
 

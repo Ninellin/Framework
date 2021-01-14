@@ -10,6 +10,7 @@ class contact extends SiteController
 {
     public function __construct()
     {
-        echo 'contact';
+        echo "contact";
     }
+
 }
