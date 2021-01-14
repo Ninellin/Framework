@@ -2,10 +2,8 @@
 
 namespace Contentus;
 
-use Controller\index;
 use Exception;
 use stdClass;
-use function PHPUnit\Framework\throwException;
 
 class Router
 {
@@ -50,14 +48,13 @@ class Router
 
     private function registerGetPath(string $link, string $path)
     {
-        $this->routes['get'][$link] = $path;
         $this->routes[] = new Route("get", $link, $path);
     }
 
 
     private function registerPostPath(string $link, string $path)
     {
-        $this->routes['post'][$link] = $path;
+        $this->routes[] = new Route("post", $link, $path);
     }
 
 
@@ -92,17 +89,6 @@ class Router
         }
         throw new Exception("Path not found");
     }
-
-
-/*    private function currentPathIsAllowed()
-    {
-        if (!array_key_exists($currentPath, $this->routes[$currentMethod]))
-        {
-            return false;
-        }
-
-        return true;
-    }*/
 
 
     private function loadRoutesFromConfig()

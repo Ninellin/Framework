@@ -1,0 +1,32 @@
+<?php
+
+namespace Controller;
+
+use Contentus\SiteController;
+use Renderer\TwigRenderer;
+
+class %%%CONTROLLERNAME%%%Controller extends SiteController
+{
+    public function __construct()
+    {
+    }
+
+
+    public function run()
+    {
+        parent::run();
+    }
+
+
+    private function getData()
+    {
+        return [];
+    }
+
+
+    private function renderView($data)
+    {
+        $renderer = new TwigRenderer();
+        $renderer->render('%%%CONTROLLERNAME%%%.twig', $data);
+    }
+}
