@@ -3,6 +3,7 @@
 
 require_once __DIR__ . "/commands/Controller/ControllerCommands.php";
 
+const INPUT_ERROR = "Unknown Input";
 
 $controllerCommands = new ControllerCommands();
 
@@ -16,7 +17,10 @@ switch ($controllerType)
     case "t":   $controllerCommands->createTwigController($controllerName);
                 break;
 
-    default:    echo "ERROR";
+    case "h":   $controllerCommands->createHtmlController($controllerName);
+                break;
+
+    default:    echo INPUT_ERROR;
                 die();
 }
 

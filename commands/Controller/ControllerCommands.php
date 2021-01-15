@@ -4,6 +4,8 @@
 class ControllerCommands
 {
 
+    const INPUT_ERROR = "Unknown Input";
+
     public function createTwigController($controllerName)
     {
         $template = file_get_contents(__DIR__ . '/../templates/controllerTemplates/TwigController');
@@ -17,6 +19,12 @@ class ControllerCommands
     }
 
 
+    public function createHtmlController($controllerName)
+    {
+
+    }
+
+
     private function addToRouteConfig($controllerName)
     {
         $methods = [];
@@ -25,9 +33,9 @@ class ControllerCommands
         $routes = json_decode($routesJson, true);
 
         $path = readline("Path: ");
-        $userMethods = readline("Methodes (p=post; g=get; pg=both) ");
-
         $this->routeAllreadyExist($routes, $path);
+
+        $userMethods = readline("Methodes (p=post; g=get; pg=both) ");
 
         switch ($userMethods)
         {
@@ -41,7 +49,7 @@ class ControllerCommands
                         $methods[] = "post";
                         break;
 
-            default:    echo "Unknown Input";
+            default:    echo self::INPUT_ERROR;
                         die();
         }
 
@@ -61,11 +69,22 @@ class ControllerCommands
         {
             if ($route["link"] === $path)
             {
-                echo "Path allready taken";
-                die();
+                die("Path allready taken");
             }
         }
 
+    }
+
+
+    private function contollerAllreadyExist($routes, $controllerName)
+    {
+        foreach ($routes["routes"] as $route)
+        {
+            if ($routes["path"] === $controllerName . "Controller.php")
+            {
+                die("Controller already exist");
+            }
+        }
     }
 
 }
