@@ -2,25 +2,41 @@
 <?php
 
 require_once __DIR__ . "/commands/Controller/ControllerCommands.php";
+require_once __DIR__ . "/commands/UserInputOutput.php";
+require_once __DIR__ . "/commands/RouteConfigHandler.php";
+require_once __DIR__ . "/commands/TextHandler.php";
+require_once __DIR__ . "/commands/ContentusConfigHandler.php";
+require_once __DIR__ . "/commands/errors/InOutException.php";
 
-const INPUT_ERROR = "Unknown Input";
 
 $controllerCommands = new ControllerCommands();
+$userInputOutput = new UserInputOutput();
+$textHandler = new TextHandler();
 
-$controllerType = readline("What Type of Controller? (t = twig; h = html)  ");
-
-$controllerName = readline("Name of the Controller: ");
+$texts = $textHandler->getTextsByLang();
 
 
-switch ($controllerType)
+$controllerType = $userInputOutput->askUserForInput($texts['questions']['CONTROLLER_KIND']);
+
+$controllerName = $userInputOutput->askUserForInput($texts['questions']['CONTROLLER_NAME']);
+
+try
 {
-    case "t":   $controllerCommands->createTwigController($controllerName);
-                break;
+    switch ($controllerType) {
+        case "t":
+            $controllerCommands->createTwigController($controllerName);
+            break;
 
-    case "h":   $controllerCommands->createHtmlController($controllerName);
-                break;
+        case "h":
+            $controllerCommands->createHtmlController($controllerName);
+            break;
 
-    default:    echo INPUT_ERROR;
-                die();
+        default:
+            throw new InOutException($texts['errors']['INPUT_ERROR']);
+    }
+}
+catch (InOutException $exception)
+{
+    $userInputOutput->inputErrorHandling($exception);
 }
 

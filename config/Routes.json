@@ -1,24 +1,36 @@
 {
   "name": "routes",
-
   "routes": {
-
     "contact": {
       "path": "contact.php",
-      "link": "/contact",
-      "allowed_methods": ["get", "post"]
+      "link": "\/contact",
+      "allowed_methods": [
+        "get",
+        "post"
+      ]
     },
-
     "about": {
       "path": "about.php",
-      "link": "/about",
-      "allowed_methods": ["get"]
+      "link": "\/about",
+      "allowed_methods": [
+        "get"
+      ]
     },
-
     "index": {
       "path": "startPage.php",
-      "link": "/",
-      "allowed_methods": ["get", "post"]
+      "link": "\/",
+      "allowed_methods": [
+        "get",
+        "post"
+      ]
+    },
+    "Test": {
+      "path": "TestController.php",
+      "link": "\/test",
+      "allowed_methods": [
+        "get",
+        "post"
+      ]
     }
   }
 }

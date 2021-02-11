@@ -2,7 +2,6 @@
 
 namespace Contentus;
 
-use Exception;
 use stdClass;
 
 class Router
@@ -87,7 +86,7 @@ class Router
                 return $controller;
             }
         }
-        throw new Exception("Path not found");
+        throw new InOutException("Path not found");
     }
 
 

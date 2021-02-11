@@ -3,8 +3,13 @@
 
 class ControllerCommands
 {
-
     const INPUT_ERROR = "Unknown Input";
+
+    public function __construct()
+    {
+         $this->userInterface = new UserInputOutput();
+         $this->routeConfigHandler = new RouteConfigHandler();
+    }
 
     public function createTwigController($controllerName)
     {
@@ -32,26 +37,14 @@ class ControllerCommands
         $routesJson = file_get_contents(__DIR__ . "/../../config/Routes.json");
         $routes = json_decode($routesJson, true);
 
-        $path = readline("Path: ");
-        $this->routeAllreadyExist($routes, $path);
+        $path = $this->userInterface->askUserForInput("Path: ");
+        $this->routeAlreadyExist($routes, $path);
 
-        $userMethods = readline("Methodes (p=post; g=get; pg=both) ");
+        $this->onControllerExist($routes, $controllerName, function() {
+            throw new InOutException('Controller already exist');
+        });
 
-        switch ($userMethods)
-        {
-            case "p":   $methods[] = "post";
-                        break;
-
-            case "g":   $methods[] = "get";
-                        break;
-
-            case "pg":  $methods[] = "get";
-                        $methods[] = "post";
-                        break;
-
-            default:    echo self::INPUT_ERROR;
-                        die();
-        }
+        $methods = $this->askUserforMethodsAndParse($methods);
 
         $routes["routes"][$controllerName]["path"] = $controllerName . "Controller.php";
         $routes["routes"][$controllerName]["link"] = $path;
@@ -63,28 +56,56 @@ class ControllerCommands
     }
 
 
-    private function routeAllreadyExist($routes, $path)
+    private function routeAlreadyExist($routes, $path)
     {
         foreach ($routes["routes"] as $route)
         {
             if ($route["link"] === $path)
             {
-                die("Path allready taken");
+                throw new InOutException("Path allready taken");
             }
         }
 
     }
 
 
-    private function contollerAllreadyExist($routes, $controllerName)
+    private function onControllerExist($routes, $controllerName, callable $onFound )
     {
         foreach ($routes["routes"] as $route)
         {
-            if ($routes["path"] === $controllerName . "Controller.php")
+            if ($route["path"] === $controllerName . "Controller.php")
             {
-                die("Controller already exist");
+                return $onFound($route);
             }
         }
+    }
+
+    /**
+     * @param array $methods
+     * @return array
+     */
+    private function askUserforMethodsAndParse(array $methods): array
+    {
+        $userMethods = readline("Methods (p=post; g=get; pg=both) ");
+
+        switch ($userMethods) {
+            case "p":
+                $methods[] = "post";
+                break;
+
+            case "g":
+                $methods[] = "get";
+                break;
+
+            case "pg":
+                $methods[] = "get";
+                $methods[] = "post";
+                break;
+
+            default:
+                throw new InOutException(self::INPUT_ERROR);
+        }
+        return $methods;
     }
 
 }
