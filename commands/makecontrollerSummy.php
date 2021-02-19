@@ -1,14 +1,18 @@
 <?php
 
+namespace Commands\makeCommands;
 
-class ControllerCommands
+use Commands\UserInputOutput;
+use RouteConfigHandler;
+
+class MakeControllerDummy
+
 {
-    const INPUT_ERROR = "Unknown Input";
 
     public function __construct()
     {
-         $this->userInterface = new UserInputOutput();
-         $this->routeConfigHandler = new RouteConfigHandler();
+        $this->userInterface = new UserInputOutput();
+        $this->routeConfigHandler = new RouteConfigHandler();
     }
 
     public function createTwigController($controllerName)
@@ -19,8 +23,8 @@ class ControllerCommands
 
         $this->addToRouteConfig($controllerName);
 
-        file_put_contents(__DIR__ . "/../../controller/". $controllerName . "Controller.php", $template);
-        file_put_contents(__DIR__ . "/../../views/". $controllerName . ".twig", "#TODO Change this File");
+        file_put_contents(__DIR__ . "/../../controller/" . $controllerName . "Controller.php", $template);
+        file_put_contents(__DIR__ . "/../../views/" . $controllerName . ".twig", "#TODO Change this File");
     }
 
 
@@ -86,7 +90,7 @@ class ControllerCommands
      */
     private function askUserforMethodsAndParse(array $methods): array
     {
-        $userMethods = readline("Methods (p=post; g=get; pg=both) ");
+        $userMethods = $this->userInterface->askUserForInput("Methods (p=post; g=get; pg=both) ");
 
         switch ($userMethods) {
             case "p":

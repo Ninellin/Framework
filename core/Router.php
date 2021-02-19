@@ -2,6 +2,7 @@
 
 namespace Contentus;
 
+use Commands\errors\InOutException;
 use stdClass;
 
 class Router

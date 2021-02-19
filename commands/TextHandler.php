@@ -1,5 +1,7 @@
 <?php
 
+namespace Commands;
+
 
 class TextHandler
 {

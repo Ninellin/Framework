@@ -9,7 +9,8 @@
             "Contentus\\": "core",
             "Tests\\": "tests",
             "Controller\\": "controller",
-            "Renderer\\": "core/Renderer"
+            "Renderer\\": "core/Renderer",
+            "Commands\\": "commands"
         }
     }
 }

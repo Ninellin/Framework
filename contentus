@@ -1,42 +1,44 @@
 #!/usr/bin/php
 <?php
 
-require_once __DIR__ . "/commands/Controller/ControllerCommands.php";
-require_once __DIR__ . "/commands/UserInputOutput.php";
-require_once __DIR__ . "/commands/RouteConfigHandler.php";
-require_once __DIR__ . "/commands/TextHandler.php";
-require_once __DIR__ . "/commands/ContentusConfigHandler.php";
-require_once __DIR__ . "/commands/errors/InOutException.php";
+use Commands\deleteCommands\DeleteCommandsMain;
+use Commands\editCommands\EditCommandsMain;
+use Commands\errors\InOutException;
+use Commands\makeCommands\MakeCommandsMain;
+use Commands\TextHandler;
+use Commands\UserInputOutput;
 
+require_once __DIR__.'/vendor/autoload.php';
 
-$controllerCommands = new ControllerCommands();
 $userInputOutput = new UserInputOutput();
 $textHandler = new TextHandler();
 
 $texts = $textHandler->getTextsByLang();
 
+try {
+    if (isset($argv[1])) {
+        $splitCommand = explode('::', $argv[1]);
 
-$controllerType = $userInputOutput->askUserForInput($texts['questions']['CONTROLLER_KIND']);
+        switch ($splitCommand[0]) {
+            case 'make':
+                $makeCommandsMain = new MakeCommandsMain();
+                $makeCommandsMain->run($splitCommand[1]);
+                break;
 
-$controllerName = $userInputOutput->askUserForInput($texts['questions']['CONTROLLER_NAME']);
+            case 'delete':
+                $deleteCommandsMain = new DeleteCommandsMain();
+                break;
 
-try
-{
-    switch ($controllerType) {
-        case "t":
-            $controllerCommands->createTwigController($controllerName);
-            break;
+            case 'edit':
+                $editCommandsMain = new EditCommandsMain();
+                break;
 
-        case "h":
-            $controllerCommands->createHtmlController($controllerName);
-            break;
+            default:
+                throw new InOutException($texts['errors']['INPUT_ERROR']);
 
-        default:
-            throw new InOutException($texts['errors']['INPUT_ERROR']);
+        }
     }
-}
-catch (InOutException $exception)
+}catch (InOutException $ex)
 {
-    $userInputOutput->inputErrorHandling($exception);
+    $userInputOutput->inputErrorHandling($ex);
 }
-

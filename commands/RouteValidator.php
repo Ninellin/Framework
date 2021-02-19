@@ -3,5 +3,7 @@
 
 class RouteValidator
 {
-
+    public function __construct()
+    {
+    }
 }

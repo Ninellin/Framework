@@ -1,5 +1,6 @@
 <?php
 
+namespace Commands;
 
 class ContentusConfigHandler
 {
