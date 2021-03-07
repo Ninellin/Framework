@@ -1,0 +1,11 @@
+name: routes
+routes:
+  contact:
+    path: contact.php
+    link: /contact
+    allowed_methods:
+      - get
+      - post
+  about:
+    - test: kakse
+      a: 1.1

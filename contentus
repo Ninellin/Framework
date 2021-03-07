@@ -1,26 +1,24 @@
 #!/usr/bin/php
 <?php
 
-require_once __DIR__ . "/commands/Controller/ControllerCommands.php";
+use Commands\errors\InOutException;
+use Commands\TextHandler;
+use Commands\UserInputOutput;
+use Commands\UserInputParser;
 
-const INPUT_ERROR = "Unknown Input";
+require_once __DIR__.'/vendor/autoload.php';
 
-$controllerCommands = new ControllerCommands();
+$userInputOutput = new UserInputOutput();
+$textHandler = new TextHandler();
+$inputParser = new UserInputParser();
 
-$controllerType = readline("What Type of Controller? (t = twig; h = html)  ");
+$texts = $textHandler->getTextsByLang();
 
-$controllerName = readline("Name of the Controller: ");
-
-
-switch ($controllerType)
+try {
+    if (isset($argv[1])) {
+        $inputParser->parseUserInput($argv[1]);
+    }
+}catch (InOutException $ex)
 {
-    case "t":   $controllerCommands->createTwigController($controllerName);
-                break;
-
-    case "h":   $controllerCommands->createHtmlController($controllerName);
-                break;
-
-    default:    echo INPUT_ERROR;
-                die();
+    $userInputOutput->inputErrorHandling($ex);
 }
-

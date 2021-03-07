@@ -12,7 +12,6 @@ class about extends SiteController
      */
     public function __construct()
     {
-        echo 'about';
     }
 
     public function run()
