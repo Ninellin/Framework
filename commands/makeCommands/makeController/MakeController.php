@@ -23,6 +23,7 @@ class MakeController
         {
             case 't':
                 $makeTwigController = new MakeTwigController();
+                $makeTwigController->make();
                 break;
 
             default:

@@ -1,42 +1,22 @@
 #!/usr/bin/php
 <?php
 
-use Commands\deleteCommands\DeleteCommandsMain;
-use Commands\editCommands\EditCommandsMain;
 use Commands\errors\InOutException;
-use Commands\makeCommands\MakeCommandsMain;
 use Commands\TextHandler;
 use Commands\UserInputOutput;
+use Commands\UserInputParser;
 
 require_once __DIR__.'/vendor/autoload.php';
 
 $userInputOutput = new UserInputOutput();
 $textHandler = new TextHandler();
+$inputParser = new UserInputParser();
 
 $texts = $textHandler->getTextsByLang();
 
 try {
     if (isset($argv[1])) {
-        $splitCommand = explode('::', $argv[1]);
-
-        switch ($splitCommand[0]) {
-            case 'make':
-                $makeCommandsMain = new MakeCommandsMain();
-                $makeCommandsMain->run($splitCommand[1]);
-                break;
-
-            case 'delete':
-                $deleteCommandsMain = new DeleteCommandsMain();
-                break;
-
-            case 'edit':
-                $editCommandsMain = new EditCommandsMain();
-                break;
-
-            default:
-                throw new InOutException($texts['errors']['INPUT_ERROR']);
-
-        }
+        $inputParser->parseUserInput($argv[1]);
     }
 }catch (InOutException $ex)
 {
