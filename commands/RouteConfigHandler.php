@@ -57,8 +57,8 @@ class RouteConfigHandler
 
     private function buildEntry($config, $controllerName, $path, $methods)
     {
-        $config["routes"][$controllerName]["path"] = $controllerName . "Controller.php";
-        $config["routes"][$controllerName]["link"] = $path;
+        $config["routes"][$controllerName]["controller"] = $controllerName . "Controller.php";
+        $config["routes"][$controllerName]["path"] = $path;
         $config["routes"][$controllerName]["allowed_methods"] = $methods;
 
         return $config;

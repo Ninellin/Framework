@@ -49,6 +49,7 @@ class Router
 
     private function registerGetPath(string $path, string $controller)
     {
+
         $this->routes[] = new Route("get", $path, $controller);
     }
 
@@ -61,12 +62,6 @@ class Router
 
     public function route()
     {
-/*        if (!$this->currentPathIsAllowed())
-        {
-            echo '404';
-            die();
-        }*/
-
         return $this->getControllerForGivenRoute();
 
     }
