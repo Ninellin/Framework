@@ -1,1 +1,28 @@
-{"name":"routes","routes":{"contact":{"controller":"contact.php","path":"\/contact","allowed_methods":["get","post"]},"about":{"controller":"about.php","path":"\/about","allowed_methods":["get"]},"index":{"controller":"startPage.php","path":"\/","allowed_methods":["get","post"]}}}
+{
+  "name": "routes",
+  "routes": {
+    "contact": {
+      "controller": "contact.php",
+      "path": "\/contact",
+      "allowed_methods": [
+        "get",
+        "post"
+      ]
+    },
+    "about": {
+      "controller": "about.php",
+      "path": "\/about",
+      "allowed_methods": [
+        "get"
+      ]
+    },
+    "index": {
+      "controller": "startPage.php",
+      "path": "\/",
+      "allowed_methods": [
+        "get",
+        "post"
+      ]
+    }
+  }
+}
