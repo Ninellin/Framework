@@ -2,15 +2,13 @@
 
 namespace Commands\makeCommands\makeController;
 
-use Commands\errors\InOutException;
 use Commands\FileHandler;
 use Commands\RouteConfigHandler;
 use Commands\TextHandler;
 use Commands\UserInputOutput;
 use Commands\UserInputParser;
-use phpDocumentor\Reflection\Type;
 
-class MakeController
+class MakeHTMLController
 {
     private $controllerName;
     private $path;
@@ -27,38 +25,11 @@ class MakeController
         $this->texts = $this->textHandler->getTextsByLang();
     }
 
-    public function run()
-    {
-        $controllerType = $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_KIND']);
-
-        switch ($controllerType)
-        {
-            case 't':
-                $controllerType = "twig";
-                break;
-
-            case 'h':
-                $controllerType = "html";
-                break;
-
-            case 'h':
-                $makeHTMLController = new MakeHTMLController();
-                $makeHTMLController->make();
-                break;
-
-            default:
-                w new InOutException($this->texts['errors']['INPUT_ERROR']);
-        }
-
-        $this->make($controllerType);
-    }
-
-
-    private function make($controllerType)
+    public function make()
     {
         $this->getUserInput();
-        $this->buildConfigEntry($controllerType);
-        $this->createFiles($controllerType);
+        $this->buildConfigEntry();
+        $this->createFiles();
     }
 
 
@@ -71,15 +42,15 @@ class MakeController
     }
 
 
-    private function buildConfigEntry($controllerType)
+    private function buildConfigEntry()
     {
-        $this->routeConfigHandler->addToRouteConfig($this->controllerName, $controllerType, $this->path, $this->methods);
+        $this->routeConfigHandler->addToRouteConfig($this->controllerName, $this->path, $this->methods);
     }
 
 
-    private function createFiles($controllerType)
+    private function createFiles()
     {
-        $this->fileHandler->createFiles($this->controllerName, $controllerType);
+        $this->fileHandler->createHTMLFiles($this->controllerName);
     }
 
 
@@ -99,4 +70,6 @@ class MakeController
     {
         return $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_NAME']);
     }
+
+
 }

@@ -1,0 +1,24 @@
+<?php
+
+namespace Controller;
+
+class %%%CONTROLLERNAME%%%Controller
+{
+    public function run()
+    {
+        $data = $this->getData();
+        $this->renderView($data);
+    }
+
+
+    private function getData()
+    {
+        return [];
+    }
+
+
+    private function renderView($data)
+    {
+        echo file_get_contents(__DIR__ . '/%%%CONTROLLERNAME%%%');
+    }
+}
