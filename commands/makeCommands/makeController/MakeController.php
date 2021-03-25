@@ -32,7 +32,7 @@ class MakeController
                 break;
 
             default:
-                w new InOutException($this->texts['errors']['INPUT_ERROR']);
+                throw new InOutException($this->texts['errors']['INPUT_ERROR']);
         }
     }
 }
