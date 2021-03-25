@@ -26,8 +26,13 @@ class MakeController
                 $makeTwigController->make();
                 break;
 
+            case 'h':
+                $makeHTMLController = new MakeHTMLController();
+                $makeHTMLController->make();
+                break;
+
             default:
-                throw new InOutException($this->texts['errors']['INPUT_ERROR']);
+                w new InOutException($this->texts['errors']['INPUT_ERROR']);
         }
     }
 }

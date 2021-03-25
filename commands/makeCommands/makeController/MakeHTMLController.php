@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Commands\makeCommands\makeController;
-
 
 use Commands\FileHandler;
 use Commands\RouteConfigHandler;
@@ -10,7 +8,7 @@ use Commands\TextHandler;
 use Commands\UserInputOutput;
 use Commands\UserInputParser;
 
-class MakeTwigController
+class MakeHTMLController
 {
     private $controllerName;
     private $path;
