@@ -25,7 +25,7 @@ class DeleteController
     public function run()
     {
         $controllerName = $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_NAME']);
+        $this->fileHandler->deleteFiles($controllerName);
         $this->routeConfigHandler->deleteFromRouteConfig($controllerName);
-        $this->fileHandler->deleteTwigFiles($controllerName);
     }
 }

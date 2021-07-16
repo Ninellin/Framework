@@ -8,20 +8,22 @@ class FileHandler
 {
     public function __construct()
     {
+        $this->routeConfigHandler = new RouteConfigHandler;
     }
 
 
-    public function deleteTwigFiles($name)
+    public function deleteFiles($name)
     {
+        $type = $this->routeConfigHandler->getControllerType($name);
         unlink(__DIR__ . '/../controller/' . $name . 'Controller.php');
-        unlink(__DIR__ . '/../views/' . $name . '.twig');
+        unlink(__DIR__ . '/../views/' . $name . '.' . $type);
     }
 
 
-    public function createTwigFiles($name)
+    public function createFiles($name, $type)
     {
-        $this->createController($name, 'TwigController');
-        file_put_contents(__DIR__ . '/../views/' . $name . '.twig', '#TODO Change this File');
+        $this->createController($name, ucfirst($type) . 'Controller');
+        file_put_contents(__DIR__ . '/../views/' . $name . "." . $type, '#TODO Change this File');
     }
 
 

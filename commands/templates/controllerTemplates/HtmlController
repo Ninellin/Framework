@@ -3,21 +3,19 @@
 namespace Controller;
 
 use Contentus\SiteController;
-use Renderer\TwigRenderer;
 
-class about extends SiteController
+class %%%CONTROLLERNAME%%%Controller extends SiteController
 {
-    /**
-     * about constructor.
-     */
     public function __construct()
     {
     }
+
 
     public function run()
     {
         parent::run();
     }
+
 
     private function getData()
     {
@@ -27,7 +25,6 @@ class about extends SiteController
 
     private function renderView($data)
     {
-        $renderer = new TwigRenderer();
-        $renderer->render('about.twig', $data);
+        echo %%%CONTROLLERNAME%%%.html;
     }
 }
