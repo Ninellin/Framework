@@ -8,6 +8,7 @@ use Commands\RouteConfigHandler;
 use Commands\TextHandler;
 use Commands\UserInputOutput;
 use Commands\UserInputParser;
+use DI\Container;
 use phpDocumentor\Reflection\Type;
 
 class MakeController
@@ -16,18 +17,22 @@ class MakeController
     private $path;
     private $methods;
 
-    public function __construct()
+    public function __construct(UserInputOutput $userInputOutput,
+                                RouteConfigHandler $routeConfigHandler,
+                                TextHandler $textHandler,
+                                UserInputParser $userInputParser,
+                                FileHandler $fileHandler)
     {
-        $this->userInputOutput = new UserInputOutput();
-        $this->routeConfigHandler = new RouteConfigHandler();
-        $this->textHandler = new TextHandler();
-        $this->inputParser = new UserInputParser();
-        $this->fileHandler = new FileHandler();
+        $this->userInputOutput = $userInputOutput;
+        $this->routeConfigHandler = $routeConfigHandler;
+        $this->textHandler = $textHandler;
+        $this->inputParser = $userInputParser;
+        $this->fileHandler = $fileHandler;
 
         $this->texts = $this->textHandler->getTextsByLang();
     }
 
-    public function run()
+    public function run(Container $diContainer)
     {
         $controllerType = $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_KIND']);
 
@@ -39,11 +44,6 @@ class MakeController
 
             case 'h':
                 $controllerType = "html";
-                break;
-
-            case 'h':
-                $makeHTMLController = new MakeHTMLController();
-                $makeHTMLController->make();
                 break;
 
             default:

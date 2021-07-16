@@ -8,15 +8,17 @@ use Commands\UserInputParser;
 
 require_once __DIR__.'/vendor/autoload.php';
 
-$userInputOutput = new UserInputOutput();
-$textHandler = new TextHandler();
-$inputParser = new UserInputParser();
+$diContainer = new \DI\Container();
+
+$userInputOutput = $diContainer->get(UserInputParser::class);
+$textHandler = $diContainer->get(TextHandler::class);
+$inputParser = $diContainer->get(UserInputParser::class);
 
 $texts = $textHandler->getTextsByLang();
 
 try {
     if (isset($argv[1])) {
-        $inputParser->parseUserInput($argv[1]);
+        $inputParser->parseUserInput($argv[1], $diContainer);
     }
 }catch (InOutException $ex)
 {

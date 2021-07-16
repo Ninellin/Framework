@@ -1,1 +1,3 @@
-{"name":"routes","routes":{"startPage":{"controller":"startPageController.php","path":"\/","allowed_methods":["get","post"]}}}
+{
+  "routes": []
+}

@@ -6,9 +6,11 @@ use Commands\errors\InOutException;
 
 class RouteConfigHandler
 {
-    public function __construct()
+    public function __construct(TextHandler $textHandler,
+                                RouteValidator $routeValidator)
     {
-        $this->textHandler = new TextHandler();
+        $this->routeValidator = $routeValidator;
+        $this->textHandler = $textHandler;
         $this->texts = $this->textHandler->getTextsByLang();
     }
 
@@ -17,7 +19,7 @@ class RouteConfigHandler
     {
         $routeConfig = $this->getRouteConfigFromFile();
 
-        $routeValidater = new RouteValidator();
+        $routeValidater = $this->routeValidator;
         $routeValidater->validate($routeConfig, $controllerName, $path, $methods);
 
         $routeConfig = $this->buildEntry($routeConfig, $type, $controllerName, $path, $methods);

@@ -31,8 +31,8 @@ class Router
 
         foreach ($this->routesConfig->routes as $route)
         {
-            $path = $route->path;
-            $controller = $route->controller;
+            $path = $route->link;
+            $controller = $route->path;
             $methodsToRegister = $route->allowed_methods;
 
             if (in_array('get', $methodsToRegister))

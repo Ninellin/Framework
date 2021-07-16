@@ -6,9 +6,9 @@ namespace Commands;
 
 class FileHandler
 {
-    public function __construct()
+    public function __construct(RouteConfigHandler $routeConfigHandler)
     {
-        $this->routeConfigHandler = new RouteConfigHandler;
+        $this->routeConfigHandler = $routeConfigHandler;
     }
 
 
@@ -24,13 +24,6 @@ class FileHandler
     {
         $this->createController($name, ucfirst($type) . 'Controller');
         file_put_contents(__DIR__ . '/../views/' . $name . "." . $type, '#TODO Change this File');
-    }
-
-
-    public function createHTMLFiles($name)
-    {
-        $this->createController($name, 'HTMLController');
-        file_put_contents(__DIR__ . '/../views/' . $name . '.html', '#TODO Change this File');
     }
 
 
