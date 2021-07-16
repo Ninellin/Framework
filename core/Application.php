@@ -3,11 +3,13 @@
 namespace Contentus;
 
 
+use Commands\errors\InOutException;
+
 class Application
 {
-    public function __construct()
+    public function __construct(Router $router)
     {
-        $this->router = new Router();
+        $this->router = $router;
         $this->router->register_routes_from_config();
     }
 
@@ -16,5 +18,6 @@ class Application
     {
         $controller = $this->router->route();
         $controller->run();
+
     }
 }

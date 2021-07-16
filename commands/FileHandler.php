@@ -6,9 +6,9 @@ namespace Commands;
 
 class FileHandler
 {
-    public function __construct()
+    public function __construct(RouteConfigHandler $routeConfigHandler)
     {
-        $this->routeConfigHandler = new RouteConfigHandler;
+        $this->routeConfigHandler = $routeConfigHandler;
     }
 
 

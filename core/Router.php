@@ -16,11 +16,11 @@ class Router
     private ConfigHandler $configHandler;
 
 
-    public function __construct()
+    public function __construct(ConfigHandler $configHandler, Request $request)
     {
-        $this->configHandler = new ConfigHandler();
+        $this->configHandler = $configHandler;
 
-        $this->request = new Request();
+        $this->request = $request;
     }
 
 
@@ -28,44 +28,40 @@ class Router
     {
         $this->loadRoutesFromConfig();
 
+
         foreach ($this->routesConfig->routes as $route)
         {
-            $path = $route->path;
-            $link = $route->link;
+            $path = $route->link;
+            $controller = $route->path;
             $methodsToRegister = $route->allowed_methods;
 
             if (in_array('get', $methodsToRegister))
             {
-                $this->registerGetPath($link, $path);
+                $this->registerGetPath($path, $controller);
             }
             if (in_array('post', $methodsToRegister))
             {
-                $this->registerPostPath($link, $path);
+                $this->registerPostPath($path, $controller);
             }
         }
     }
 
 
-    private function registerGetPath(string $link, string $path)
+    private function registerGetPath(string $path, string $controller)
     {
-        $this->routes[] = new Route("get", $link, $path);
+
+        $this->routes[] = new Route("get", $path, $controller);
     }
 
 
-    private function registerPostPath(string $link, string $path)
+    private function registerPostPath(string $path, string $controller)
     {
-        $this->routes[] = new Route("post", $link, $path);
+        $this->routes[] = new Route("post", $path, $controller);
     }
 
 
     public function route()
     {
-/*        if (!$this->currentPathIsAllowed())
-        {
-            echo '404';
-            die();
-        }*/
-
         return $this->getControllerForGivenRoute();
 
     }

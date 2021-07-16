@@ -5,9 +5,9 @@ namespace Commands;
 
 class TextHandler
 {
-    public function __construct()
+    public function __construct(ContentusConfigHandler $contentusConfigHandler)
     {
-        $this->contentusConfigHandler = new ContentusConfigHandler();
+        $this->contentusConfigHandler = $contentusConfigHandler;
     }
 
     public function getTextsByLang()

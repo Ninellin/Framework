@@ -37,7 +37,7 @@ class Route
 
     private function methodeAllowed($request)
     {
-        if ($this->methode === $request->getMethode())
+        if ($this->methode === $request->getMethod())
         {
             return true;
         }
