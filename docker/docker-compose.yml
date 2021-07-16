@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ../../Framework:/usr/share/nginx/html/Framework
+      - ../../Framework/public:/usr/share/nginx/html
+
+
+  php:
+    network_mode: service:web
+    build:
+      target: dev
+      context: .
+      dockerfile: PHP.Dockerfile
+    volumes:
+      - ../../Framework:/Framework
+
+
+  mysql:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'toor'
+      MYSQL_USER: 'test'
+      MYSQL_PASSWORD: 'toor'
+      MYSQL_DATABASE: 'test'
+    volumes:
+      - mysqldata:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+
+volumes:
+  mysqldata: {}
