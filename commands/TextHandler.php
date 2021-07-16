@@ -10,7 +10,7 @@ class TextHandler
         $this->contentusConfigHandler = $contentusConfigHandler;
     }
 
-    public function getTextsByLang()
+    public function getTextsByLang(): array
     {
         $lang = $this->contentusConfigHandler->getLanguage();
         return require __DIR__ . '/../lang/' . $lang . '/controllers.php';

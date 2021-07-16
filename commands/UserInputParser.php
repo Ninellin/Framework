@@ -48,7 +48,7 @@ class UserInputParser
     }
 
 
-    public function parseMethodesInput($userMethods)
+    public function parseMethodesInput($userMethods): array
     {
         switch ($userMethods) {
             case "p":
