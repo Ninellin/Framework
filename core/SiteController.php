@@ -4,7 +4,7 @@
 namespace Contentus;
 
 
-class TwigController
+class SiteController
 {
     public function run()
     {

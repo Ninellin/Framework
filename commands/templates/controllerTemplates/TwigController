@@ -2,10 +2,10 @@
 
 namespace Controller;
 
-use Contentus\TwigController;
+use Contentus\SiteController;
 use Renderer\TwigRenderer;
 
-class %%%CONTROLLERNAME%%%Controller extends TwigController
+class %%%CONTROLLERNAME%%%Controller extends SiteController
 {
     public function run()
     {
