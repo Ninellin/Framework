@@ -25,12 +25,6 @@ class FileHandler
     }
 
 
-    public function createHTMLFiles($name)
-    {
-        $this->createController($name, 'HTMLController');
-        file_put_contents(__DIR__ . '/../views/' . $name . '.html', '#TODO Change this File');
-    }
-
 
     private function createController($name, $controllerType)
     {
