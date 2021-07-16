@@ -25,7 +25,6 @@ class FileHandler
     }
 
 
-
     private function createController($name, $controllerType)
     {
         $template = file_get_contents(__DIR__ . '/templates/controllerTemplates/' . $controllerType);
