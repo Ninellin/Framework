@@ -52,7 +52,7 @@ class MakeTwigController
 
     private function createFiles()
     {
-        $this->fileHandler->createHTMLFiles($this->controllerName);
+        $this->fileHandler->createTwigFiles($this->controllerName);
     }
 
 
