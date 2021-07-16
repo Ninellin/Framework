@@ -60,14 +60,14 @@ class Router
     }
 
 
-    public function route()
+    public function route(): object
     {
         return $this->getControllerForGivenRoute();
 
     }
 
 
-    private function getControllerForGivenRoute()
+    private function getControllerForGivenRoute(): object
     {
         foreach ($this->routes as $route)
         {

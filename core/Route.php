@@ -18,7 +18,7 @@ class Route
     }
 
 
-    public function matches($request)
+    public function matches($request): bool
     {
         if ($this->path === $request->getPath() && $this->methodeAllowed($request))
         {
@@ -29,13 +29,13 @@ class Route
     }
 
 
-    public function getController()
+    public function getController(): string
     {
         return $this->controller;
     }
 
 
-    private function methodeAllowed($request)
+    private function methodeAllowed($request): bool
     {
         if ($this->methode === $request->getMethod())
         {

@@ -39,7 +39,7 @@ class RouteConfigHandler
     }
 
 
-    public function getControllerType($controllerName)
+    public function getControllerType($controllerName): string
     {
         $routeConfig = $this->getRouteConfigFromFile();
         $this->controllerExistsInConfig($controllerName, $routeConfig);
@@ -48,7 +48,7 @@ class RouteConfigHandler
     }
 
 
-    private function getRouteConfigFromFile()
+    private function getRouteConfigFromFile(): array
     {
         $routesJson = file_get_contents(__DIR__ . "/../config/Routes.json");
         return json_decode($routesJson, true);
@@ -60,7 +60,7 @@ class RouteConfigHandler
         file_put_contents(__DIR__ . "/../config/Routes.json", $routesJson);
     }
 
-    private function buildEntry($config, $type, $controllerName, $path, $methods)
+    private function buildEntry($config, $type, $controllerName, $path, $methods): array
     {
         $config["routes"][$controllerName]["path"] = $controllerName . "Controller.php";
         $config["routes"][$controllerName]["type"] = $type;

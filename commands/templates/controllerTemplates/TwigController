@@ -14,7 +14,7 @@ class %%%CONTROLLERNAME%%%Controller extends SiteController
     }
 
 
-    private function getData()
+    private function getData(): array
     {
         return [];
     }

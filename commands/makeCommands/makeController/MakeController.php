@@ -83,19 +83,19 @@ class MakeController
     }
 
 
-    private function getMethodsFromUser()
+    private function getMethodsFromUser(): string
     {
         return $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_METHODS']);
     }
 
 
-    private function getPathFromUser()
+    private function getPathFromUser(): string
     {
         return $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_PATH']);
     }
 
 
-    private function getControllerNameFromUser()
+    private function getControllerNameFromUser(): string
     {
         return $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_NAME']);
     }

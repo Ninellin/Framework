@@ -5,7 +5,7 @@ namespace Commands;
 class UserInputOutput
 {
 
-    public function askUserForInput($question)
+    public function askUserForInput($question): string
     {
         return readline($question);
     }
