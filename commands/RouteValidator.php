@@ -6,10 +6,10 @@ use Commands\errors\InOutException;
 
 class RouteValidator
 {
-    public function __construct()
+    public function __construct(TextHandler $textHandler)
     {
-        $textHandler = new TextHandler();
-        $this->texts = $textHandler->getTextsByLang();
+        $this->textHandler = $textHandler;
+        $this->texts = $this->textHandler->getTextsByLang();
     }
 
 

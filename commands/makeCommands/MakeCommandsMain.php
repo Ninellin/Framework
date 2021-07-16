@@ -3,6 +3,7 @@
 namespace Commands\makeCommands;
 
 use Commands\makeCommands\makeController\MakeController;
+use DI\Container;
 
 class MakeCommandsMain
 {
@@ -10,13 +11,13 @@ class MakeCommandsMain
     {
     }
 
-    public function run($param)
+    public function run($param, Container $diContainer)
     {
         switch ($param)
         {
             case 'controller':
-                $makeController = new MakeController();
-                $makeController->run();
+                $makeController = $diContainer->get(MakeController::class);
+                $makeController->run($diContainer);
                 break;
 
         }

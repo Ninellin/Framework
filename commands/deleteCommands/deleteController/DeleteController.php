@@ -12,12 +12,15 @@ use Commands\UserInputOutput;
 
 class DeleteController
 {
-    public function __construct()
+    public function __construct(TextHandler $textHandler,
+                                RouteConfigHandler $routeConfigHandler,
+                                FileHandler $fileHandler,
+                                UserInputOutput $userInputOutput)
     {
-        $this->textHandler = new TextHandler();
-        $this->routeConfigHandler = new RouteConfigHandler();
-        $this->fileHandler = new FileHandler();
-        $this->userInputOutput = new UserInputOutput();
+        $this->textHandler = $textHandler;
+        $this->routeConfigHandler = $routeConfigHandler;
+        $this->fileHandler = $fileHandler;
+        $this->userInputOutput = $userInputOutput;
         $this->texts = $this->textHandler->getTextsByLang();
     }
 

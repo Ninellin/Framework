@@ -5,12 +5,12 @@ namespace Commands;
 
 class TextHandler
 {
-    public function __construct()
+    public function __construct(ContentusConfigHandler $contentusConfigHandler)
     {
-        $this->contentusConfigHandler = new ContentusConfigHandler();
+        $this->contentusConfigHandler = $contentusConfigHandler;
     }
 
-    public function getTextsByLang()
+    public function getTextsByLang(): array
     {
         $lang = $this->contentusConfigHandler->getLanguage();
         return require __DIR__ . '/../lang/' . $lang . '/controllers.php';

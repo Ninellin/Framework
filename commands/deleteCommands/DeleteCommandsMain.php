@@ -5,6 +5,7 @@ namespace Commands\deleteCommands;
 
 
 use Commands\deleteCommands\deleteController\DeleteController;
+use DI\Container;
 
 class DeleteCommandsMain
 {
@@ -12,12 +13,12 @@ class DeleteCommandsMain
     {
     }
 
-    public function run($param)
+    public function run($param, Container $diContainer)
     {
         switch ($param)
         {
             case 'controller':
-                $deleteController = new DeleteController();
+                $deleteController = $diContainer->get(DeleteController::class);
                 $deleteController->run();
                 break;
 

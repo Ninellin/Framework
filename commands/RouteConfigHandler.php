@@ -6,9 +6,11 @@ use Commands\errors\InOutException;
 
 class RouteConfigHandler
 {
-    public function __construct()
+    public function __construct(TextHandler $textHandler,
+                                RouteValidator $routeValidator)
     {
-        $this->textHandler = new TextHandler();
+        $this->routeValidator = $routeValidator;
+        $this->textHandler = $textHandler;
         $this->texts = $this->textHandler->getTextsByLang();
     }
 
@@ -17,7 +19,7 @@ class RouteConfigHandler
     {
         $routeConfig = $this->getRouteConfigFromFile();
 
-        $routeValidater = new RouteValidator();
+        $routeValidater = $this->routeValidator;
         $routeValidater->validate($routeConfig, $controllerName, $path, $methods);
 
         $routeConfig = $this->buildEntry($routeConfig, $type, $controllerName, $path, $methods);
@@ -37,7 +39,7 @@ class RouteConfigHandler
     }
 
 
-    public function getControllerType($controllerName)
+    public function getControllerType($controllerName): string
     {
         $routeConfig = $this->getRouteConfigFromFile();
         $this->controllerExistsInConfig($controllerName, $routeConfig);
@@ -46,7 +48,7 @@ class RouteConfigHandler
     }
 
 
-    private function getRouteConfigFromFile()
+    private function getRouteConfigFromFile(): array
     {
         $routesJson = file_get_contents(__DIR__ . "/../config/Routes.json");
         return json_decode($routesJson, true);
@@ -58,7 +60,7 @@ class RouteConfigHandler
         file_put_contents(__DIR__ . "/../config/Routes.json", $routesJson);
     }
 
-    private function buildEntry($config, $type, $controllerName, $path, $methods)
+    private function buildEntry($config, $type, $controllerName, $path, $methods): array
     {
         $config["routes"][$controllerName]["path"] = $controllerName . "Controller.php";
         $config["routes"][$controllerName]["type"] = $type;

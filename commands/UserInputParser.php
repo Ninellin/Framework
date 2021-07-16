@@ -8,17 +8,18 @@ use Commands\deleteCommands\DeleteCommandsMain;
 use Commands\editCommands\EditCommandsMain;
 use Commands\errors\InOutException;
 use Commands\makeCommands\MakeCommandsMain;
+use DI\Container;
 
 
 class UserInputParser
 {
-    public function __construct()
+    public function __construct(TextHandler $textHandler)
     {
-        $textHandler = new TextHandler();
+        $this->textHandler = $textHandler;
         $this->texts = $textHandler->getTextsByLang();
     }
 
-    public function parseUserInput($userInput)
+    public function parseUserInput($userInput, Container $diContainer)
     {
         $splitCommand = explode('::', $userInput);
 
@@ -27,17 +28,17 @@ class UserInputParser
 
         switch ($command) {
             case 'make':
-                $makeCommandsMain = new MakeCommandsMain();
-                $makeCommandsMain->run($details);
+                $makeCommandsMain = $diContainer->get(MakeCommandsMain::class);
+                $makeCommandsMain->run($details, $diContainer);
                 break;
 
             case 'delete':
-                $deleteCommandsMain = new DeleteCommandsMain();
-                $deleteCommandsMain->run($details);
+                $deleteCommandsMain = $diContainer->get(DeleteCommandsMain::class);
+                $deleteCommandsMain->run($details, $diContainer);
                 break;
 
             case 'edit':
-                $editCommandsMain = new EditCommandsMain();
+                $editCommandsMain = $diContainer->get(EditCommandsMain::class);
                 break;
 
             default:
@@ -47,7 +48,7 @@ class UserInputParser
     }
 
 
-    public function parseMethodesInput($userMethods)
+    public function parseMethodesInput($userMethods): array
     {
         switch ($userMethods) {
             case "p":

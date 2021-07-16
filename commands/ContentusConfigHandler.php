@@ -10,7 +10,7 @@ class ContentusConfigHandler
         $this->contentusConfig = json_decode($this->contentusConfigJson, true);
     }
 
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->contentusConfig['lang'];
     }
