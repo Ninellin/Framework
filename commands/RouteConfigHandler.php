@@ -13,14 +13,14 @@ class RouteConfigHandler
     }
 
 
-    public function addToRouteConfig($controllerName, $path, $methods)
+    public function addToRouteConfig($controllerName, $type, $path, $methods)
     {
         $routeConfig = $this->getRouteConfigFromFile();
 
         $routeValidater = new RouteValidator();
         $routeValidater->validate($routeConfig, $controllerName, $path, $methods);
 
-        $routeConfig = $this->buildEntry($routeConfig, $controllerName, $path, $methods);
+        $routeConfig = $this->buildEntry($routeConfig, $type, $controllerName, $path, $methods);
 
         $this->putRouteConfigToFile($routeConfig);
     }
@@ -29,17 +29,20 @@ class RouteConfigHandler
     public function deleteFromRouteConfig( $controllerName)
     {
         $routeConfig = $this->getRouteConfigFromFile();
+        $this->controllerExistsInConfig($controllerName, $routeConfig);
 
-        if (array_key_exists($controllerName, $routeConfig['routes']))
-        {
-            unset($routeConfig['routes'][$controllerName]);
-        }
-        else
-        {
-            throw new InOutException($this->texts['errors']['CONTROLLER_NOT_EXISTS']);
-        }
+        unset($routeConfig['routes'][$controllerName]);
 
         $this->putRouteConfigToFile($routeConfig);
+    }
+
+
+    public function getControllerType($controllerName)
+    {
+        $routeConfig = $this->getRouteConfigFromFile();
+        $this->controllerExistsInConfig($controllerName, $routeConfig);
+
+        return $routeConfig["routes"][$controllerName]["type"];
     }
 
 
@@ -55,12 +58,20 @@ class RouteConfigHandler
         file_put_contents(__DIR__ . "/../config/Routes.json", $routesJson);
     }
 
-    private function buildEntry($config, $controllerName, $path, $methods)
+    private function buildEntry($config, $type, $controllerName, $path, $methods)
     {
         $config["routes"][$controllerName]["path"] = $controllerName . "Controller.php";
+        $config["routes"][$controllerName]["type"] = $type;
         $config["routes"][$controllerName]["link"] = $path;
         $config["routes"][$controllerName]["allowed_methods"] = $methods;
 
         return $config;
+    }
+
+
+    private function controllerExistsInConfig($controllerName, $routeConfig)
+    {
+        if (!array_key_exists($controllerName, $routeConfig['routes']))
+            throw new InOutException($this->texts['errors']['CONTROLLER_NOT_EXISTS']);
     }
 }
