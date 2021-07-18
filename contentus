@@ -1,7 +1,11 @@
 #!/usr/bin/php
 <?php
 
+use Commands\deleteCommands\DeleteCommandsMain;
+use Commands\editCommands\EditCommandsMain;
+use Commands\errors\FileException;
 use Commands\errors\InOutException;
+use Commands\makeCommands\MakeCommandsMain;
 use Commands\TextHandler;
 use Commands\UserInputOutput;
 use Commands\UserInputParser;
@@ -10,17 +14,20 @@ require_once __DIR__.'/vendor/autoload.php';
 
 $diContainer = new \DI\Container();
 
-$userInputOutput = $diContainer->get(UserInputParser::class);
+$userInputOutput = $diContainer->get(UserInputOutput::class);
 $textHandler = $diContainer->get(TextHandler::class);
 $inputParser = $diContainer->get(UserInputParser::class);
+$makeCommandsMain = $diContainer->get(MakeCommandsMain::class);
+$deleteCommandsMain = $diContainer->get(DeleteCommandsMain::class);
+$editCommandsMain = $diContainer->get(EditCommandsMain::class);
 
 $texts = $textHandler->getTextsByLang();
 
 try {
     if (isset($argv[1])) {
-        $inputParser->parseUserInput($argv[1], $diContainer);
+        $inputParser->parseUserInput($argv[1], $makeCommandsMain, $deleteCommandsMain, $editCommandsMain);
     }
-}catch (InOutException $ex)
+}catch (InOutException | FileException $ex)
 {
     $userInputOutput->inputErrorHandling($ex);
 }

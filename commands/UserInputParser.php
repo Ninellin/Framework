@@ -5,9 +5,11 @@ namespace Commands;
 
 
 use Commands\deleteCommands\DeleteCommandsMain;
+use Commands\deleteCommands\deleteController\DeleteController;
 use Commands\editCommands\EditCommandsMain;
 use Commands\errors\InOutException;
 use Commands\makeCommands\MakeCommandsMain;
+use Commands\makeCommands\makeController\MakeController;
 use DI\Container;
 
 
@@ -15,11 +17,13 @@ class UserInputParser
 {
     public function __construct(TextHandler $textHandler)
     {
+        $this->container = new Container();
+
         $this->textHandler = $textHandler;
         $this->texts = $textHandler->getTextsByLang();
     }
 
-    public function parseUserInput($userInput, Container $diContainer)
+    public function parseUserInput($userInput, MakeCommandsMain $makeCommandsMain, DeleteCommandsMain $deleteCommandsMain, EditCommandsMain $editCommandsMain)
     {
         $splitCommand = explode('::', $userInput);
 
@@ -28,17 +32,16 @@ class UserInputParser
 
         switch ($command) {
             case 'make':
-                $makeCommandsMain = $diContainer->get(MakeCommandsMain::class);
-                $makeCommandsMain->run($details, $diContainer);
+                $makeController = $this->container->get(MakeController::class);
+                $makeCommandsMain->run($details, $makeController);
                 break;
 
             case 'delete':
-                $deleteCommandsMain = $diContainer->get(DeleteCommandsMain::class);
-                $deleteCommandsMain->run($details, $diContainer);
+                $deleteController = $this->container->get(DeleteController::class);
+                $deleteCommandsMain->run($details, $deleteController);
                 break;
 
             case 'edit':
-                $editCommandsMain = $diContainer->get(EditCommandsMain::class);
                 break;
 
             default:

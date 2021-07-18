@@ -8,7 +8,6 @@ use Commands\RouteConfigHandler;
 use Commands\TextHandler;
 use Commands\UserInputOutput;
 use Commands\UserInputParser;
-use DI\Container;
 use phpDocumentor\Reflection\Type;
 
 class MakeController
@@ -32,7 +31,7 @@ class MakeController
         $this->texts = $this->textHandler->getTextsByLang();
     }
 
-    public function run(Container $diContainer)
+    public function run()
     {
         $controllerType = $this->userInputOutput->askUserForInput($this->texts['questions']['CONTROLLER_KIND']);
 

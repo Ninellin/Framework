@@ -4,7 +4,8 @@ return [
         'INPUT_ERROR' => 'Unknown Input',
         'PATH_TAKEN' => 'Path already taken',
         'CONTROLLER_EXISTS' => 'Controller already exists',
-        'CONTROLLER_NOT_EXISTS' => 'No such Controller'
+        'CONTROLLER_NOT_EXISTS' => 'No such Controller',
+        'VIEW_NOT_EXISTS' => 'No View for Controller'
     ],
     'questions' => [
         'CONTROLLER_KIND' => 'What Type of Controller? (t = twig; h = html) ',

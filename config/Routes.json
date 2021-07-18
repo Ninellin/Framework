@@ -1,3 +1,13 @@
 {
-  "routes": []
+  "routes": {
+    "test": {
+      "path": "testController.php",
+      "type": "twig",
+      "link": "\/",
+      "allowed_methods": [
+        "get",
+        "post"
+      ]
+    }
+  }
 }
