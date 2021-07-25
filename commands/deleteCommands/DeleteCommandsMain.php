@@ -5,23 +5,28 @@ namespace Commands\deleteCommands;
 
 
 use Commands\deleteCommands\deleteController\DeleteController;
-use DI\Container;
+use Commands\errors\InOutException;
+use Commands\TextHandler;
 
 class DeleteCommandsMain
 {
-    public function __construct()
+    public function __construct(TextHandler $textHandler, DeleteController $deleteController)
     {
+        $this->deleteController = $deleteController;
+        $this->textHandler = $textHandler;
+        $this->texts = $this->textHandler->getTextsByLang();
     }
 
-    public function run($param, Container $diContainer)
+    public function run($param)
     {
         switch ($param)
         {
             case 'controller':
-                $deleteController = $diContainer->get(DeleteController::class);
-                $deleteController->run();
+                $this->deleteController->run();
                 break;
 
+            default:
+                throw new InOutException($this->texts['errors']['INPUT_ERROR']);
         }
     }
 }

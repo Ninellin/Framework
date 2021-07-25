@@ -28,7 +28,7 @@ class RouteValidator
     {
         foreach ($configPaths as $paths)
         {
-            if ($paths["path"] === $path)
+            if ($paths["link"] === $path)
             {
                 return $onFound($paths);
             }
@@ -41,7 +41,7 @@ class RouteValidator
         {
             foreach ($configPaths as $paths)
             {
-                if ($paths["controller"] === $controllerName . "Controller.php")
+                if ($paths["path"] === $controllerName . "Controller.php")
                 {
                     return $onFound($paths);
                 }

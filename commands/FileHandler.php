@@ -4,17 +4,32 @@
 namespace Commands;
 
 
+use Commands\errors\FileException;
+
 class FileHandler
 {
-    public function __construct(RouteConfigHandler $routeConfigHandler)
+    public function __construct(RouteConfigHandler $routeConfigHandler, TextHandler $textHandler)
     {
+        $this->textHandler = $textHandler;
         $this->routeConfigHandler = $routeConfigHandler;
+
+        $this->texts = $this->textHandler->getTextsByLang();
     }
 
 
     public function deleteFiles($name)
     {
         $type = $this->routeConfigHandler->getControllerType($name);
+
+        if (!file_exists(__DIR__ . '/../controller/' . $name . 'Controller.php'))
+        {
+            throw new FileException($this->texts['errors']['CONTROLLER_NOT_EXISTS']);
+        }
+        elseif (!file_exists(__DIR__ . '/../views/' . $name . '.' . $type))
+        {
+            throw new FileException($this->texts['errors']['VIEW_NOT_EXISTS']);
+        }
+
         unlink(__DIR__ . '/../controller/' . $name . 'Controller.php');
         unlink(__DIR__ . '/../views/' . $name . '.' . $type);
     }
