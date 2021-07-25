@@ -31,8 +31,8 @@ class MakeCommandsMainTest extends TestCase
         $this->init();
         $this->expectException(InOutException::class);
 
-        $makeMain = new MakeCommandsMain($this->textHandler);
-        $makeMain->run("", $this->mockMakeController);
+        $makeMain = new MakeCommandsMain($this->textHandler, $this->mockMakeController);
+        $makeMain->run("");
     }
 
 
@@ -40,11 +40,11 @@ class MakeCommandsMainTest extends TestCase
     {
         $this->init();
 
-        $makeMain = new MakeCommandsMain($this->textHandler);
+        $makeMain = new MakeCommandsMain($this->textHandler, $this->mockMakeController);
 
         $this->mockMakeController->expects($this->exactly(1))->method("run");
 
-        $makeMain->run("controller", $this->mockMakeController);
+        $makeMain->run("controller");
     }
     /////End test method run/////
 }

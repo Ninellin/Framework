@@ -26,11 +26,11 @@ class UserInputParserTest extends TestCase
         $container = new Container();
         $textHandler = $container->get(TextHandler::class);
 
-        $this->userInputParser = new UserInputParser($textHandler);
-
         $this->mockMakeMain = $this->getMockBuilder(MakeCommandsMain::class)->disableOriginalConstructor()->getMock();
         $this->mockDeleteMain = $this->getMockBuilder(DeleteCommandsMain::class)->disableOriginalConstructor()->getMock();
         $this->mockEditMain = $this->getMockBuilder(EditCommandsMain::class)->disableOriginalConstructor()->getMock();
+
+        $this->userInputParser = new UserInputParser($textHandler, $this->mockMakeMain, $this->mockDeleteMain, $this->mockEditMain);
     }
 
 
@@ -41,7 +41,7 @@ class UserInputParserTest extends TestCase
 
         $this->expectException(InOutException::class);
 
-        $this->userInputParser->parseUserInput("test::test", $this->mockMakeMain, $this->mockDeleteMain, $this->mockEditMain);
+        $this->userInputParser->parseUserInput("test::test");
     }
 
 
@@ -53,7 +53,7 @@ class UserInputParserTest extends TestCase
             ->method("run")
             ->with("test");
 
-        $this->userInputParser->parseUserInput("make::test", $this->mockMakeMain, $this->mockDeleteMain, $this->mockEditMain);
+        $this->userInputParser->parseUserInput("make::test");
     }
 
 
@@ -65,7 +65,7 @@ class UserInputParserTest extends TestCase
             ->method("run")
             ->with("test");
 
-        $this->userInputParser->parseUserInput("delete::test", $this->mockMakeMain, $this->mockDeleteMain, $this->mockEditMain);
+        $this->userInputParser->parseUserInput("delete::test");
     }
     /////End test parseUserInput/////
 

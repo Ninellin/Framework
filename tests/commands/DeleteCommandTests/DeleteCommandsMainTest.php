@@ -32,8 +32,8 @@ class DeleteCommandsMainTest extends TestCase
         $this->init();
         $this->expectException(InOutException::class);
 
-        $makeDelete = new DeleteCommandsMain($this->textHandler);
-        $makeDelete->run("", $this->mockDeleteController);
+        $makeDelete = new DeleteCommandsMain($this->textHandler, $this->mockDeleteController);
+        $makeDelete->run("");
     }
 
 
@@ -41,11 +41,11 @@ class DeleteCommandsMainTest extends TestCase
     {
         $this->init();
 
-        $makeDelete = new DeleteCommandsMain($this->textHandler);
+        $makeDelete = new DeleteCommandsMain($this->textHandler, $this->mockDeleteController);
 
         $this->mockDeleteController->expects($this->exactly(1))->method("run");
 
-        $makeDelete->run("controller", $this->mockDeleteController);
+        $makeDelete->run("controller");
     }
     /////End test method run/////
 }

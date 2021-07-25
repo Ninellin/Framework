@@ -8,18 +8,19 @@ use Commands\TextHandler;
 
 class MakeCommandsMain
 {
-    public function __construct(TextHandler $textHandler)
+    public function __construct(TextHandler $textHandler, MakeController $makeController)
     {
+        $this->makeController = $makeController;
         $this->textHandler = $textHandler;
         $this->texts = $this->textHandler->getTextsByLang();
     }
 
-    public function run($param, MakeController $makeController)
+    public function run($param)
     {
         switch ($param)
         {
             case 'controller':
-                $makeController->run();
+                $this->makeController->run();
                 break;
 
             default:

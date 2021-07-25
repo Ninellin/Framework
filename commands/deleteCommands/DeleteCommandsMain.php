@@ -10,18 +10,19 @@ use Commands\TextHandler;
 
 class DeleteCommandsMain
 {
-    public function __construct(TextHandler $textHandler)
+    public function __construct(TextHandler $textHandler, DeleteController $deleteController)
     {
+        $this->deleteController = $deleteController;
         $this->textHandler = $textHandler;
         $this->texts = $this->textHandler->getTextsByLang();
     }
 
-    public function run($param, DeleteController $deleteController)
+    public function run($param)
     {
         switch ($param)
         {
             case 'controller':
-                $deleteController->run();
+                $this->deleteController->run();
                 break;
 
             default:

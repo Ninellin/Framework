@@ -15,15 +15,21 @@ use DI\Container;
 
 class UserInputParser
 {
-    public function __construct(TextHandler $textHandler)
+    public function __construct(TextHandler $textHandler,
+                                MakeCommandsMain $makeCommandsMain,
+                                DeleteCommandsMain $deleteCommandsMain,
+                                EditCommandsMain $editCommandsMain)
     {
         $this->container = new Container();
 
+        $this->makeCommandsMain =$makeCommandsMain;
+        $this->deleteCommandsMain = $deleteCommandsMain;
+        $this->editCommandsMain = $editCommandsMain;
         $this->textHandler = $textHandler;
         $this->texts = $textHandler->getTextsByLang();
     }
 
-    public function parseUserInput($userInput, MakeCommandsMain $makeCommandsMain, DeleteCommandsMain $deleteCommandsMain, EditCommandsMain $editCommandsMain)
+    public function parseUserInput($userInput)
     {
         $splitCommand = explode('::', $userInput);
 
@@ -32,13 +38,11 @@ class UserInputParser
 
         switch ($command) {
             case 'make':
-                $makeController = $this->container->get(MakeController::class);
-                $makeCommandsMain->run($details, $makeController);
+                $this->makeCommandsMain->run($details);
                 break;
 
             case 'delete':
-                $deleteController = $this->container->get(DeleteController::class);
-                $deleteCommandsMain->run($details, $deleteController);
+                $this->deleteCommandsMain->run($details);
                 break;
 
             case 'edit':
