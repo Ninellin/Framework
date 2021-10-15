@@ -1,10 +1,8 @@
 <?php
 
+namespace Controller;
 
-namespace Contentus;
-
-
-class SiteController
+class %%%CONTROLLERNAME%%%Controller
 {
     public function run()
     {
@@ -15,10 +13,12 @@ class SiteController
 
     private function getData()
     {
+        return [];
     }
 
 
     private function renderView($data)
     {
+        echo file_get_contents(__DIR__ . '/%%%CONTROLLERNAME%%%');
     }
 }

@@ -1,0 +1,50 @@
+version: '3'
+services:
+  app:
+    image: webdevops/php-nginx-dev:7.4
+    volumes:
+      - ../:/var/www/html:z
+    labels:
+      traefik.frontend.rule: "Host:Framework.localhost,localhost"
+      traefik.port: "80"
+    environment:
+      - WEB_DOCUMENT_ROOT=/var/www/html/public
+    ports:
+      - 8081:80
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD= 'test'
+      - MYSQL_DATABASE= 'test'
+      - MYSQL_USER= 'test'
+      - MYSQL_PASSWORD= 'test'
+    ports:
+      - 33060:3306
+    volumes:
+      - db_data:/var/lib/mysql
+
+    # Adminer
+  adminer:
+    image: adminer
+    environment:
+      ADMINER_DESIGN: "pepa-linha"
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
+    labels:
+      traefik.frontend.rule: "Host:adminer.Framework.localhost"
+      traefik.port: "8080"
+
+    #Traefik
+  traefik:
+    image: traefik:v1.6.6
+    command: "-c /dev/null --docker --docker.domain=localhost"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80"
+
+volumes:
+  db_data:

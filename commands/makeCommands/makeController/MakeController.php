@@ -46,6 +46,11 @@ class MakeController
                 $controllerType = "html";
                 break;
 
+            case 'h':
+                $makeHTMLController = new MakeHTMLController();
+                $makeHTMLController->make();
+                break;
+
             default:
                 throw new InOutException($this->texts['errors']['INPUT_ERROR']);
         }
