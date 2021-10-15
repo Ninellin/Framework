@@ -10,6 +10,7 @@ use Commands\TextHandler;
 use Commands\UserInputOutput;
 use Commands\UserInputParser;
 
+
 require_once __DIR__.'/vendor/autoload.php';
 
 $diContainer = new \DI\Container();
@@ -25,7 +26,7 @@ $texts = $textHandler->getTextsByLang();
 
 try {
     if (isset($argv[1])) {
-        $inputParser->parseUserInput($argv[1], $makeCommandsMain, $deleteCommandsMain, $editCommandsMain);
+        $inputParser->parseUserInput($argv[1]);
     }
 }catch (InOutException | FileException $ex)
 {

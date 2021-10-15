@@ -19,15 +19,12 @@ class MakeController
     public function __construct(UserInputOutput $userInputOutput,
                                 RouteConfigHandler $routeConfigHandler,
                                 TextHandler $textHandler,
-                                UserInputParser $userInputParser,
                                 FileHandler $fileHandler)
     {
         $this->userInputOutput = $userInputOutput;
         $this->routeConfigHandler = $routeConfigHandler;
         $this->textHandler = $textHandler;
-        $this->inputParser = $userInputParser;
         $this->fileHandler = $fileHandler;
-
         $this->texts = $this->textHandler->getTextsByLang();
     }
 

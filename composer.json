@@ -15,7 +15,7 @@
             "Tests\\": "tests",
             "Controller\\": "controller",
             "Renderer\\": "core/Renderer",
-            "Commands\\": "commands"
+            "Commands\\": "plugins/cli"
         }
     }
 }

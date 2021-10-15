@@ -36,7 +36,7 @@ class MakeControllerTest extends TestCase
 
         $this->texts = $this->mockTextHandler->getTextsByLang();
 
-        $this->makeController = new MakeController($this->mockUserInputOutput, $this->mockRouteConfigHandler, $this->mockTextHandler, $this->mockUserInputParser, $this->mockFileHandler);
+        $this->makeController = new MakeController($this->mockUserInputOutput, $this->mockRouteConfigHandler, $this->mockTextHandler, $this->mockFileHandler);
     }
 
 

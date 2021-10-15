@@ -5,12 +5,9 @@ namespace Commands;
 
 
 use Commands\deleteCommands\DeleteCommandsMain;
-use Commands\deleteCommands\deleteController\DeleteController;
 use Commands\editCommands\EditCommandsMain;
 use Commands\errors\InOutException;
 use Commands\makeCommands\MakeCommandsMain;
-use Commands\makeCommands\makeController\MakeController;
-use DI\Container;
 
 
 class UserInputParser
@@ -20,8 +17,6 @@ class UserInputParser
                                 DeleteCommandsMain $deleteCommandsMain,
                                 EditCommandsMain $editCommandsMain)
     {
-        $this->container = new Container();
-
         $this->makeCommandsMain =$makeCommandsMain;
         $this->deleteCommandsMain = $deleteCommandsMain;
         $this->editCommandsMain = $editCommandsMain;
